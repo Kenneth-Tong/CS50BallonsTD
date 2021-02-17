@@ -3,21 +3,16 @@ import javafx.scene.shape.Circle;
 import java.awt.*;
 
 public class Balloon {
-    private int lives, goingToLocation;
+    private int lives, goingToLocation = 0, hitboxWidth = 1, hitboxHeight = 1, radius = 16;
     private Color color;
     private double speed, velX, velY; //relative to red
-    private Circle hitBox;
+    private Rectangle hitBox;
     private Location location;
 //    private String resistance;
 
     public Balloon (int lives, Location location) { //TODO add boolean camo and regen
         this.lives = lives;
-        if(lives != 6)
-        {
-            hitBox = new Circle(5);
-        } else {
-            hitBox = new Circle(10);
-        }
+        hitBox = new Rectangle(hitboxWidth, hitboxHeight);
         switch(lives) {
             case 1:
                 color = Color.RED;
@@ -43,7 +38,7 @@ public class Balloon {
         this.location = location;
     }
 
-    public Balloon (Location location, int type) {
+    public Balloon (Location location, int type) { //white black balloons
         switch(type)
         {
             case 1:
@@ -56,6 +51,7 @@ public class Balloon {
                 break;
         }
         this.location = location;
+        hitBox = new Rectangle(hitboxWidth, hitboxHeight);
     }
 
     public void pop() { //TODO spawn in more depending on balloon
@@ -73,7 +69,15 @@ public class Balloon {
         return location;
     }
 
-    public void moveX(int x) {
+    public void updateLocation() {
+        location.updateLocation(velX, velY);
+    }
+
+    public void setLocation(Location l) {
+        location = l;
+    }
+
+    public void moveX(double x) {
         velX = x * speed;
     }
 
@@ -81,7 +85,7 @@ public class Balloon {
         return velX;
     }
 
-    public void moveY(int y) {
+    public void moveY(double y) {
         velY = y * speed;
     }
 
@@ -99,5 +103,29 @@ public class Balloon {
 
     public Color getColor() {
         return color;
+    }
+
+    public Rectangle getHitBox() {
+        return hitBox;
+    }
+
+    public void updateHitBox() {
+        hitBox.setLocation((int) location.getX(), (int) location.getY());
+    }
+
+    public int getHitBoxWidth() {
+        return hitboxWidth;
+    }
+
+    public int getHitBoxHeight() {
+        return hitboxHeight;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public int getRadius() {
+        return radius;
     }
 }

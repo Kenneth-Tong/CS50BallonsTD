@@ -7,6 +7,7 @@ public abstract class Monkey {
     private ArrayList<Balloon> balloonsInSight;
     private Circle visionBox;
     private Location location;
+    private int value;
 
     public Monkey (int x, int y)
     {
@@ -26,5 +27,9 @@ public abstract class Monkey {
             return true;
         }
         return false;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

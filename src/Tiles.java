@@ -17,6 +17,10 @@ public class Tiles {
                 name = "water";
                 color = new Color(102, 178, 255);
                 break;
+            case "P":
+                name = "path";
+                color = new Color(222, 184, 135);
+                break;
         }
         location = new Location(posX, posY);
         setBoxes(posX, posY, width, height);
