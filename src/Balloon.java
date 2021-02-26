@@ -113,19 +113,15 @@ public class Balloon {
         hitBox.setLocation((int) location.getX(), (int) location.getY());
     }
 
-    public int getHitBoxWidth() {
-        return hitboxWidth;
-    }
-
-    public int getHitBoxHeight() {
-        return hitboxHeight;
-    }
-
     public int getLives() {
         return lives;
     }
 
     public int getRadius() {
         return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 }

@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GuiGame extends JPanel implements ActionListener {
-    private final int Height, Width, TILESIZEW = 10, TILESIZEH = 10;
+    private int Height, Width, TILESIZEW = 10, TILESIZEH = 10;
     private Tiles[][] board = new Tiles[TILESIZEW][TILESIZEH];
     private Player player;
     private ArrayList<Balloon> balloonList = new ArrayList<>(); //TODO layer balloons via double arraylist within an arraylist
@@ -29,10 +28,9 @@ public class GuiGame extends JPanel implements ActionListener {
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
     }
-
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed (ActionEvent e){
         //TODO monkey shooting! + balloons
-        if(!endGame) {
+        if (!endGame) {
             if (newRound) { //round ended and now add balloons
                 try {
                     readBalloons();
@@ -42,7 +40,7 @@ public class GuiGame extends JPanel implements ActionListener {
                 newRound = false; //TODO make button t
             } else {
                 updateBalloon();
-                if(balloonList.size() == 0) {
+                if (balloonList.size() == 0) {
                     newRound = true;
                     round++;
                 }
@@ -53,11 +51,18 @@ public class GuiGame extends JPanel implements ActionListener {
             //TODO make a reset button
         }
     }
-
     public void reset() {
         //TODO
     }
-
+    public void resizeUpdate(int h, int w) {
+        Height = h;
+        Width = w;
+        createBoard();
+        System.out.println("HI");
+        for(Balloon b: balloonList) {
+            b.setRadius(board[0][0].getDrawBox().height);
+        }
+    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < board.length; i++) { //draw board
@@ -113,7 +118,7 @@ public class GuiGame extends JPanel implements ActionListener {
 
     public void createBoard() { //TODO find out why it prints sideways map
         int pathLocationCount = 0;
-        Scanner reader = readText("Test");
+        Scanner reader = readText("Level4");
         for (int i = 0; i < board.length; i++) {
             for (int c = 0; c < board[0].length; c++) {
                 int balloonTile = -1;
@@ -286,7 +291,7 @@ public class GuiGame extends JPanel implements ActionListener {
     public int findNumber(String line, int startingValue, char find) {
         for(int j = startingValue; j < line.length(); j++) {
             if (line.charAt(j) == find) {
-                System.out.println(line.substring(startingValue, j));
+                //System.out.println(line.substring(startingValue, j));
                 return Integer.valueOf(line.substring(startingValue, j));
             }
         }

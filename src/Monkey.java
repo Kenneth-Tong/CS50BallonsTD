@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public abstract class Monkey {
     //do vision and the arraylist of balloons
-    private ArrayList<Balloon> balloonsInSight;
+    private ArrayList<Balloon> balloonsInSight;//TODO last and first balloon attack
     private Circle visionBox;
     private Location location;
-    private int value;
+    private int value, visionRadius;
 
     public Monkey (int x, int y)
     {
