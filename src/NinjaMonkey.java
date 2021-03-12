@@ -1,2 +1,19 @@
-public class NinjaMonkey {
+public class NinjaMonkey extends Monkey {
+    private int darts = -1;
+
+    public NinjaMonkey (int x, int y)
+    {
+        super(x,y);
+        setImage();
+    }
+
+    @Override
+    public void setImage() {
+        super.setImagePath("C:\\Users\\shrey\\OneDrive\\Documents\\5 Programming\\test\\src\\images\\NinjaMonkey.png");
+    }
+
+    public void attack() {
+        //TODO
+    }
+
 }

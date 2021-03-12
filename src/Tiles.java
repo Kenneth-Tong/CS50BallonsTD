@@ -22,6 +22,7 @@ public class Tiles {
                 color = new Color(222, 184, 135);
                 break;
         }
+
         location = new Location(posX, posY);
         setBoxes(posX, posY, width, height);
     }
@@ -48,4 +49,6 @@ public class Tiles {
     public Location getLocation() {
         return location;
     }
+
+
 }

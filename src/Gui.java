@@ -1,23 +1,42 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 public class Gui extends JFrame implements ComponentListener {
-    private static int WIDTH = 600, HEIGHT = 600;
-    private GuiGame panelMap;
+    private static int WIDTH = 850, HEIGHT = 850;
+    private Arcade panelMap;
+
     public Gui() {
         super("Blimp Obelisk Shielding");
-        Player Player = new Player("Kenny"); //TODO make panel
+        Player Player = new Player(); //TODO make panel
         super.setLayout(new BorderLayout());
-        HotBar hotBarButtons = new HotBar(Player); //this will be used in the gui map
-        JPanel panelButtons = hotBarButtons;
-        super.add(panelButtons, BorderLayout.SOUTH);
-        panelMap = new GuiGame(Player, WIDTH, HEIGHT);
-        JPanel panel = panelMap;
+
+        panelMap = new GuiGame(Player,WIDTH, HEIGHT);
+
+        Game display = new Game(panelMap); //passing in a JavaArcade, therefore I know I can call getHighScore(), getScore()
+        HotBar hotbar = new HotBar(panelMap, display); //Also passing in JavaArcade to ControlPanel, I know you will respond to buttons
+        panelMap.setDisplay(display);
+
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(new EmptyBorder(0, 5, 0, 5));
+        panel.add(display, BorderLayout.NORTH);
+        panel.add((JPanel)panelMap, BorderLayout.CENTER);
+        panel.add(hotbar, BorderLayout.SOUTH);
+
+
+        /*
         super.add(panel, BorderLayout.CENTER);
         panelMap.updateHotBar(hotBarButtons);
         hotBarButtons.setPanel(panelMap);
+
+         */
+
+        Container c = getContentPane();
+        c.add(panel, BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {

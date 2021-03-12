@@ -6,8 +6,19 @@ public class Player {
     private String name;
     private ArrayList<Monkey> towers = new ArrayList<>();
 
-    public Player(String name) {
+    public Player(){
+
+    }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     public void sell(Monkey m) {
@@ -18,6 +29,7 @@ public class Player {
             }
         }
     }
+
 
     public boolean buy(Monkey m) {
         if(money - m.getValue() < 0) {
@@ -34,6 +46,9 @@ public class Player {
         if(lives < 1)
             return true;
         return false;
+    }
+    public void resetLives(){
+        lives = 150;
     }
 
     public int getLives() {
