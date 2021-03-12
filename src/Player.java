@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Player {
     private int lives = 150; //easy = 200, medium = 150, hard = 100, impopable = 1
-    private int money = 250;
+    private int money = 600, score = 0;
     private String name;
     private ArrayList<Monkey> towers = new ArrayList<>();
 
@@ -26,10 +26,10 @@ public class Player {
         for (int i = 0; i < towers.size(); i++) {
             if(towers.get(i) == m) {
                 towers.remove(i);
+                break;
             }
         }
     }
-
 
     public boolean buy(Monkey m) {
         if(money - m.getValue() < 0) {
@@ -53,5 +53,17 @@ public class Player {
 
     public int getLives() {
         return lives;
+    }
+
+    public ArrayList<Monkey> getTowers() {
+        return towers;
+    }
+
+    public void addPoint() {
+        score++;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

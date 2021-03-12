@@ -27,7 +27,6 @@ public class Gui extends JFrame implements ComponentListener {
         panel.add((JPanel)panelMap, BorderLayout.CENTER);
         panel.add(hotbar, BorderLayout.SOUTH);
 
-
         /*
         super.add(panel, BorderLayout.CENTER);
         panelMap.updateHotBar(hotBarButtons);

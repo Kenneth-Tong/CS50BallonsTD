@@ -5,7 +5,9 @@ public class ScubaMonkey extends Monkey {
     {
         super(x,y);
         super.setName("ScubaMonkey");
-        setImage(0);
+        super.setValue(300);
+        super.setImage(0);
+        super.setVisionRadius(100);
     }
 
     public void attack() {

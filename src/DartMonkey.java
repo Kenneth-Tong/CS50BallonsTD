@@ -6,6 +6,8 @@ public class DartMonkey extends Monkey {
         super(x,y);
         super.setName("DartMonkey");
         super.setImage(0);
+        super.setValue(250);
+        super.setVisionRadius(200);
     }
 
     public void attack() {

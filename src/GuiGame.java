@@ -17,7 +17,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
     private javax.swing.Timer timer;
 
     private ArrayList<Balloon> balloonList = new ArrayList<>(); //TODO layer balloons via double arraylist within an arraylist
-    public static ArrayList<Monkey> monkeys = new ArrayList<>();
 
     private Game game;
 
@@ -52,9 +51,10 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                 } catch (IOException ioException) {
                     System.out.println("Error with reading balloon.txt");
                 }
-                newRound = false; //TODO make button t
+                newRound = false;
             } else {
                 updateBalloon();
+                updateSight();
                 if (balloonList.size() == 0) {
                     newRound = true;
                     round++;
@@ -64,6 +64,13 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         } else {
             JOptionPane.showMessageDialog(null, "DEFEAT\nRounds Survived: " + round, "Game Over", JOptionPane.PLAIN_MESSAGE);
             //TODO make a reset button
+        }
+    }
+    public void updateSight() {
+        for(Monkey m: player.getTowers()) {
+            for(Balloon b: balloonList) {
+                m.inSight(b);
+            }
         }
     }
     public void resizeUpdate(int h, int w) {
@@ -109,17 +116,19 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     (int) balloonList.get(i).getHitBox().getWidth(),
                     (int) balloonList.get(i).getHitBox().getHeight());
         }
-        for(Monkey m : monkeys) {
+        for(Monkey m : player.getTowers()) {
             m.draw(g, this);
+            g.drawOval((int) m.getVisionBox().getCenterX(), (int) m.getVisionBox().getCenterY(), m.getVisionRadius(), m.getVisionRadius()); //TODO center vision cone and vision
         }
         Font font = new Font("Comic Sans", Font.BOLD, 25); //TODO make it maybe on hotbar or nicer
         g.setFont(font);
         g.drawString("Money: " + player.getMoney(), 20, 80);
-        game.update(player.getLives());
+        g.drawString("Lives: " + player.getMoney(), Width - 150, 80);
+        game.update(player.getScore());
 
         if (start){
             g.drawString("Click Start to begin playing!", 80, Height - 200);
-        }else if (pause) {
+        } else if (pause) {
             g.drawString("Game Paused", 150, Height - 200);
         }
 
@@ -128,7 +137,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         if (info){
             g.drawString("Click anywhere on the screen to place the monkey.", 10, Height - 100);
         }
-
     }
 
     //Kenny Stuff
@@ -338,10 +346,13 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     if (dartM) {
                         int x = e.getX(), y = e.getY();
                         if (checkSpot("normal", x, y)) {
-                            monkeys.add(new DartMonkey(x, y));
-                            hideInstructions(2);
-                            repaint();
-
+                            DartMonkey m = new DartMonkey(x, y);
+                            if (player.buy(m)) {
+                                hideInstructions(2);
+                                repaint();
+                            } else {
+                                showInstructions(0, "DartMonkey");
+                            }
                         } else {
                             showInstructions(5, "DartMonkey");
                         }
@@ -360,9 +371,13 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     if (ninjaM) {
                         int x = e.getX(), y = e.getY();
                         if (checkSpot("normal", x, y)) {
-                            monkeys.add(new NinjaMonkey(x, y));
-                            hideInstructions(2);
-                            repaint();
+                            NinjaMonkey m = new NinjaMonkey(x, y);
+                            if (player.buy(m)) {
+                                hideInstructions(2);
+                                repaint();
+                            } else {
+                                showInstructions(0, "NinjaMonkey");
+                            }
                         } else {
                             showInstructions(5, "NinjaMonkey");
                         }
@@ -381,9 +396,13 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     if (superM) {
                         int x = e.getX(), y = e.getY();
                         if (checkSpot("normal", x, y)) {
-                            monkeys.add(new SuperMonkey(x, y));
-                            hideInstructions(2);
-                            repaint();
+                            SuperMonkey m = new SuperMonkey(x, y);
+                            if (player.buy(m)) {
+                                hideInstructions(2);
+                                repaint();
+                            } else {
+                                showInstructions(0, "SuperMonkey");
+                            }
                         } else {
                             showInstructions(5, "SuperMonkey");
                         }
@@ -401,9 +420,13 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     if (scubaM) {
                         int x = e.getX(), y = e.getY();
                         if (checkSpot("water", x, y)) {
-                            monkeys.add(new ScubaMonkey(x, y));
-                            hideInstructions(2);
-                            repaint();
+                            ScubaMonkey m = new ScubaMonkey(x, y);
+                            if (player.buy(m)) {
+                                hideInstructions(2);
+                                repaint();
+                            } else {
+                                showInstructions(0, "ScubaMonkey");
+                            }
                         } else {
                             showInstructions(5, "ScubaMonkey");
                         }
@@ -463,6 +486,12 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         return corners;
     }
     public void showInstructions(int type, String monkey) {
+        if (type == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "You need more money for this monkey!",
+                    "Invalid Purchase",
+                    JOptionPane.PLAIN_MESSAGE);
+        }
         if (type == 1) {
             start = true;
         }else if (type == 2){
@@ -531,7 +560,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         repaint();
     }
     public void reset() { // stops the game
-        monkeys.clear();
+        player.getTowers().clear();
         balloonList.clear();
         active = false;
         timer.stop(); // stops the timers and music

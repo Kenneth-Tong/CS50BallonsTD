@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -18,22 +19,25 @@ public class HotBar extends JPanel implements ActionListener{
         game = t;
         stats = g;
 
-        dartMonkey = new JButton("Dart Monkey");
+        super.setLayout(new GridLayout(3, 4));
+
+        dartMonkey = new JButton("Dart Monkey - $250");
         dartMonkey.addActionListener(this);
         add(dartMonkey);
 
-        ninjaMonkey = new JButton("Ninja Monkey");
-        ninjaMonkey.addActionListener(this);
-        add(ninjaMonkey);
-
-        superMonkey = new JButton("Super Monkey");
-        superMonkey.addActionListener(this);
-        add(superMonkey);
-
-        scubaMonkey = new JButton("Scuba Monkey");
+        scubaMonkey = new JButton("Scuba Monkey - $300");
         scubaMonkey.addActionListener(this);
         add(scubaMonkey);
 
+        ninjaMonkey = new JButton("Ninja Monkey - $400");
+        ninjaMonkey.addActionListener(this);
+        add(ninjaMonkey);
+
+        superMonkey = new JButton("Super Monkey - $2000");
+        superMonkey.addActionListener(this);
+        add(superMonkey);
+
+        add(Box.createHorizontalStrut(40));
         add(Box.createHorizontalStrut(40));
 
         startButton = new JButton("Start Round");

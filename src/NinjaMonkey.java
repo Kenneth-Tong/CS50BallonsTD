@@ -6,6 +6,8 @@ public class NinjaMonkey extends Monkey {
         super(x,y);
         super.setName("NinjaMonkey");
         super.setImage(0);
+        super.setValue(450);
+        super.setVisionRadius(100);
     }
 
     public void attack() {

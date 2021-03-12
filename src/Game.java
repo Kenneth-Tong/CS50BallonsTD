@@ -20,7 +20,7 @@ public class Game extends JPanel
         setBorder(new EmptyBorder(0, 0, 5, 0));
         Font gameNameFont = new Font("Monospaced", Font.BOLD, 24);
 
-        JLabel gName = new JLabel("Bloons Tower Defense");
+        JLabel gName = new JLabel("Balloons Tower Defense");
         gName.setForeground(Color.red);
         gName.setFont(gameNameFont);
         add(gName);
@@ -39,16 +39,15 @@ public class Game extends JPanel
         yourScoreText.setText(" Your Score: " + points);
     }
 
-    public void gameOver(int points)
-    {
+    public void gameOver(int points) {
         if(points > Integer.parseInt(game.getHighScore())){
             if (points > Integer.parseInt(game.getHighScore())) {
                 yourScoreText.setForeground(Color.BLUE);
                 JOptionPane.showMessageDialog(null,
-                        "Congratulations " + game.getPlayerName() + "!\nYou are the new high scorer!!!",
+                        "Congratulations " + game.getPlayerName() + "!\nYou are the new high scorer!",
                         "High Score", JOptionPane.PLAIN_MESSAGE);
                 try {
-                    PrintWriter writer = new PrintWriter(new File("C:\\Users\\shrey\\OneDrive\\Documents\\5 Programming\\AP Java\\Supreme\\highScores.txt"));
+                    PrintWriter writer = new PrintWriter(new File("highScores.txt"));
                     writer.println(points);
                     writer.close();
                 } catch (Exception e) {
@@ -56,7 +55,5 @@ public class Game extends JPanel
                 }
             }
         }
-
     }
-
 }
