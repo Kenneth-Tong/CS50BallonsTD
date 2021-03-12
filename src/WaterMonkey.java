@@ -4,12 +4,8 @@ public class WaterMonkey extends Monkey {
     public WaterMonkey (int x, int y)
     {
         super(x,y);
-        setImage();
-    }
-
-
-    public void setImage() {
-        super.setImagePath("C:\\Users\\shrey\\OneDrive\\Documents\\5 Programming\\test\\src\\images\\ScubaMonkey.png");
+        super.setName("WaterMonkey");
+        setImage(0);
     }
 
     public void attack() {

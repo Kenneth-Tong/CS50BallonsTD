@@ -17,8 +17,7 @@ public abstract class Monkey {
     // private Circle visionBox;
     private Rectangle box;
     private Location location;
-    public static ArrayList<Monkey> monkeys = new ArrayList<Monkey>();
-
+    private String name;
 
     private double velX, velY;
     private int value, visionRadius;
@@ -69,11 +68,6 @@ public abstract class Monkey {
         location = l;
     }
 
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public boolean isImageFill() {
         return imageFill;
     }
@@ -87,15 +81,24 @@ public abstract class Monkey {
         try {
             image = ImageIO.read(new File(s));
         } catch (IOException ex) {
-            // handle exception...
+            System.out.println("Could not find file");
         }
     }
-
-
-    public abstract void setImage();
+    public void setImage(int i) {
+        if (i == 0) {
+            setImagePath(name + ".png");
+        } else {
+            setImagePath(name + "2.png");
+        }
+    }
     public abstract void attack();
-
     public int getValue() {
         return value;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String s) {
+        name = s;
     }
 }

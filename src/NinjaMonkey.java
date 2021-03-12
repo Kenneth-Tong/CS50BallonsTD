@@ -4,12 +4,8 @@ public class NinjaMonkey extends Monkey {
     public NinjaMonkey (int x, int y)
     {
         super(x,y);
-        setImage();
-    }
-
-    @Override
-    public void setImage() {
-        super.setImagePath("C:\\Users\\shrey\\OneDrive\\Documents\\5 Programming\\test\\src\\images\\NinjaMonkey.png");
+        super.setName("NinjaMonkey");
+        super.setImage(0);
     }
 
     public void attack() {
