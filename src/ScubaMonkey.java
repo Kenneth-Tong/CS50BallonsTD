@@ -1,10 +1,10 @@
-public class WaterMonkey extends Monkey {
+public class ScubaMonkey extends Monkey {
     private int darts = -1;
 
-    public WaterMonkey (int x, int y)
+    public ScubaMonkey(int x, int y)
     {
         super(x,y);
-        super.setName("WaterMonkey");
+        super.setName("ScubaMonkey");
         setImage(0);
     }
 

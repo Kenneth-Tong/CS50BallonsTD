@@ -401,7 +401,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     if (scubaM) {
                         int x = e.getX(), y = e.getY();
                         if (checkSpot("water", x, y)) {
-                            monkeys.add(new WaterMonkey(x, y));
+                            monkeys.add(new ScubaMonkey(x, y));
                             hideInstructions(2);
                             repaint();
                         } else {
@@ -454,7 +454,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         return true;
     }
-    private Location[] getFourCorners(int x, int y){
+    private Location[] getFourCorners(int x, int y) {
         Location[] corners = new Location[4];
         corners[0] = new Location(x - (16), y - (16));
         corners[1] = new Location(x - (16), y + (16));
@@ -472,7 +472,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }else if (type == 5){
             pauseGame();
             JOptionPane.showMessageDialog(null,
-                    monkey + " can't be placed there!." +
+                    monkey + " can't be placed there!" +
                             "\nYour monkey was either too close to the path or on the wrong tile!" +
                             "\nRemember: ScubaMonkeys can only be on Water, rest of the monkeys can only be on Grass.",
                     "Invalid Spot", JOptionPane.PLAIN_MESSAGE);
@@ -514,7 +514,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         // sets the boolean value to true
         if (count == 0) {
             player.setName((String) JOptionPane.showInputDialog(this,
-                    "Enter your name, young one!", "Enter Name", JOptionPane.PLAIN_MESSAGE,
+                    "Enter your name:", "Enter Name", JOptionPane.PLAIN_MESSAGE,
                     null, null, "name"));
         }
         timer.start(); // stars the game
