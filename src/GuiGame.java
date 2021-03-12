@@ -491,7 +491,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
     }
     public String getHighScore() {
         try {
-            File highScores = new File("C:\\Users\\shrey\\OneDrive\\Documents\\5 Programming\test\\src\\highscores.txt");
+            File highScores = new File("highscores.txt");
             Scanner reader = new Scanner(highScores);
             String a = "";
             while (reader.hasNextLine())
