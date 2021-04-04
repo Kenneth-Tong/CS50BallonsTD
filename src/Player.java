@@ -1,13 +1,15 @@
 import java.util.ArrayList;
 
 public class Player {
-    private int lives = 150; //easy = 200, medium = 150, hard = 100, impopable = 1
-    private int money = 600, score = 0;
+    private int lives;
+    private int money, score;
     private String name;
     private ArrayList<Monkey> towers = new ArrayList<>();
 
-    public Player(){
-
+    public Player() {
+        money = 600;
+        score = 0;
+        lives = 150;
     }
 
     public String getName() {
@@ -21,14 +23,11 @@ public class Player {
         return money;
     }
 
-    public void sell(Monkey m) {
-        money += m.getValue();
-        for (int i = 0; i < towers.size(); i++) {
-            if(towers.get(i) == m) {
-                towers.remove(i);
-                break;
-            }
-        }
+    public void reset() {
+        money = 600;
+        lives = 150;
+        score = 0;
+        towers.clear();
     }
 
     public boolean buy(Monkey m) {
@@ -47,9 +46,6 @@ public class Player {
             return true;
         return false;
     }
-    public void resetLives(){
-        lives = 150;
-    }
 
     public int getLives() {
         return lives;
@@ -57,10 +53,6 @@ public class Player {
 
     public ArrayList<Monkey> getTowers() {
         return towers;
-    }
-
-    public void addPoint() {
-        score++;
     }
 
     public int getScore() {

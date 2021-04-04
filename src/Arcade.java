@@ -8,7 +8,6 @@ public interface Arcade {
     public void reset();
     public String getPlayerName();
     public String getHighScore();
-    public void resizeUpdate(int h, int w);
     public void placeMonkeys(String type);
     public void setDisplay(Game d);
 

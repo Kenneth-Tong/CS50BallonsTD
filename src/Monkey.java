@@ -14,44 +14,31 @@ import java.awt.image.ImageObserver;
 public abstract class Monkey {
     //do vision and the arraylist of balloons
     private ArrayList<Balloon> balloonsInSight = new ArrayList<>();//TODO last and first balloon attack
-    private Color color;
     private BufferedImage image;
     private boolean imageFill = true;
     private Circle visionBox;
     private Rectangle box;
     private Location location;
     private String name;
-    private double velX, velY;
     private int value, visionRadius;
+    private double velocity;
 
-    public Monkey (int x, int y)
+    public Monkey (int x, int y, double v)
     {
         location = new Location(x,y);
         box = new Rectangle(32, 32);
         box.setLocation((int) location.getX(), (int) location.getY());
         visionBox = new Circle();
         setImageFill(true);
+        velocity = v;
     }
 
     public ArrayList<Balloon> getBalloonsInSight() {
         return balloonsInSight;
     }
 
-    public boolean inSight(Balloon b) {
-        Rectangle balloonHitBox = b.getHitBox(); //TODO set calculations
-        int dx = (int) Math.max(Math.abs(visionBox.getCenterX() - balloonHitBox.getX()), Math.abs(balloonHitBox.getX() + balloonHitBox.getWidth() - visionBox.getCenterX()));
-        int dy = (int) Math.max(Math.abs(visionBox.getCenterY() - balloonHitBox.getY()), Math.abs(balloonHitBox.getY() + balloonHitBox.getHeight() - visionBox.getCenterY()));
-        if (visionRadius * visionRadius >= (dx * dx) + (dy * dy)){
-            System.out.println("Found one");
-            balloonsInSight.add(b);
-            return true;
-        }
-        return false;
-    }
-
     public void draw(Graphics g, ImageObserver observer){  // draws the rectangle
         Color oldColor = g.getColor();
-        g.setColor(color);
         int x = (int)(box.getX() - (box.getWidth() / 2));
         int y =  (int)(box.getY() - (box.getHeight() / 2));
         if (isImageFill())
@@ -59,15 +46,8 @@ public abstract class Monkey {
         g.setColor(oldColor);
     }
 
-
     public Location getLocation() {
         return location;
-    }
-    public void updateLocation() {
-        location.updateLocation(velX, velY);
-    }
-    public void setLocation(Location l) {
-        location = l;
     }
 
     public boolean isImageFill() {
@@ -121,5 +101,9 @@ public abstract class Monkey {
     public Rectangle getBox() {
         return box;
     }
-    public abstract void attack();
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public abstract Dart attack(ArrayList<Balloon> targets);
 }

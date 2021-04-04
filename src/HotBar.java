@@ -5,17 +5,14 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.Box;
 
-
-
 public class HotBar extends JPanel implements ActionListener{
-    private JButton dartMonkey, ninjaMonkey, superMonkey, scubaMonkey, startButton, pauseButton, resetButton;
+    private JButton dartMonkey, superMonkey, scubaMonkey, startButton, pauseButton, resetButton;
     private Arcade game;
     private Game stats;
 
     private int count = 0;
 
     public HotBar(Arcade t, Game g) {
-        //monkeys = GuiGame.getMonkeys();
         game = t;
         stats = g;
 
@@ -29,14 +26,11 @@ public class HotBar extends JPanel implements ActionListener{
         scubaMonkey.addActionListener(this);
         add(scubaMonkey);
 
-        ninjaMonkey = new JButton("Ninja Monkey - $400");
-        ninjaMonkey.addActionListener(this);
-        add(ninjaMonkey);
-
         superMonkey = new JButton("Super Monkey - $2000");
         superMonkey.addActionListener(this);
         add(superMonkey);
 
+        add(Box.createHorizontalStrut(40));
         add(Box.createHorizontalStrut(40));
         add(Box.createHorizontalStrut(40));
 
@@ -88,11 +82,7 @@ public class HotBar extends JPanel implements ActionListener{
             if (game.running())
                 game.placeMonkeys("dart");
         }
-        else if(button == ninjaMonkey)
-        {
-            if (game.running())
-                game.placeMonkeys("ninja");
-        }
+
         else if(button == superMonkey)
         {
             if (game.running())

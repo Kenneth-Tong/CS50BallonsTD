@@ -1,17 +1,40 @@
+import java.util.ArrayList;
+
 public class SuperMonkey extends Monkey {
     private int darts = -1;
+    private final int vision = 100, COOLDOWN = 10;
+    private double velocity, timer;
 
     public SuperMonkey (int x, int y)
     {
-        super(x,y);
-        super.setName("SuperMonkey");
+        super(x, y, 3.5);
+        super.setName("DartMonkey");
         super.setImage(0);
-        super.setValue(2000);
+        super.setValue(250);
         super.setVisionRadius(200);
     }
 
-    public void attack() {
-        //TODO
-    }
+    @Override
 
+    public Dart attack(ArrayList<Balloon> targets) {
+        if (timer > 0) timer--;
+        Location targ = null;
+        for (Balloon b : targets) {
+            if (Math.sqrt(Math.pow(b.getLocation().getX() - this.getLocation().getX(), 2) +
+                    Math.pow(b.getLocation().getY() - this.getLocation().getY(), 2)) <= vision) {
+                targ = b.getLocation();
+                //TODO: rotate monkey
+            }
+        }
+        if (timer == 0 && targ != null) {
+            timer = COOLDOWN;
+            return new Dart(this.getVelocity() *
+                    Math.cos(Math.atan((this.getLocation().getY() - targ.getY()) / (this.getLocation().getX() - targ.getX()))),
+                    this.getVelocity() *
+                            Math.sin(Math.atan((this.getLocation().getY() - targ.getY()) / (this.getLocation().getX() - targ.getX()))),
+                    this.getLocation().getX(), this.getLocation().getY());
+
+        }
+        return null;
+    }
 }

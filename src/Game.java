@@ -8,8 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 public class Game extends JPanel
 {
-    private JTextField gameNameText, currentHighScorer, currentHighScore;
-    private int yourScore;
     private JLabel yourScoreText;
     private Arcade game;
 
@@ -33,7 +31,6 @@ public class Game extends JPanel
         game = t;
     }
 
-
     public void update(int points)
     {
         yourScoreText.setText(" Your Score: " + points);
@@ -51,7 +48,7 @@ public class Game extends JPanel
                     writer.println(points);
                     writer.close();
                 } catch (Exception e) {
-                    System.out.println("pp");
+                    System.out.println("Done");
                 }
             }
         }
