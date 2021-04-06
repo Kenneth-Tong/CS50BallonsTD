@@ -3,16 +3,25 @@
 import java.awt.*;
 
 public class Balloon {
-    private int lives, goingToLocation = 0, hitboxWidth = 1, hitboxHeight = 1, radius = 16;
+    private int lives, goingToLocation = 0, hitbox = 35, radius = 50, pathbox = 1;
+    //hitbox height and width is best at 35 for darts
     private Color color;
     private double speed, velX, velY; //relative to red
-    private Rectangle hitBox;
+    private Rectangle hitBox, pathBox;
     private Location location;
+    private int value;
 //    private String resistance;
 
     public Balloon (int lives, Location location) { //TODO add boolean camo and regen
         this.lives = lives;
-        hitBox = new Rectangle(hitboxWidth, hitboxHeight);
+        value = lives;
+        hitBox = new Rectangle(hitbox, hitbox);
+        pathBox = new Rectangle(pathbox, pathbox);
+        updateColor(lives);
+        this.location = location;
+    }
+
+    public void updateColor(int lives) {
         switch(lives) {
             case 1:
                 color = Color.RED;
@@ -35,34 +44,13 @@ public class Balloon {
                 speed = 3.5;
                 break;
         }
-        this.location = location;
     }
 
-    public Balloon (Location location, int type) { //white black balloons
-        switch(type)
-        {
-            case 1:
-                color = Color.BLACK;
-                speed = 1.8;
-                break;
-            case 2:
-                color = Color.WHITE;
-                speed = 2;
-                break;
-        }
-        this.location = location;
-        hitBox = new Rectangle(hitboxWidth, hitboxHeight);
-    }
-
-    public void pop() { //TODO spawn in more depending on balloon
+    public int pop() {
         lives--;
-    }
-
-    public boolean checkDead() {
-        if (lives < 1) {
-            return true;
-        }
-        return false;
+        updateColor(lives);
+        if(lives <= 0) return value;
+        else return 0;
     }
 
     public Location getLocation() {
@@ -81,16 +69,8 @@ public class Balloon {
         velX = x * speed;
     }
 
-    public double getVelX() {
-        return velX;
-    }
-
     public void moveY(double y) {
         velY = y * speed;
-    }
-
-    public double getVelY() {
-        return velY;
     }
 
     public int getGoingToLocation() {
@@ -109,8 +89,13 @@ public class Balloon {
         return hitBox;
     }
 
-    public void updateHitBox() {
-        hitBox.setLocation((int) location.getX(), (int) location.getY());
+    public Rectangle getPathBox() {
+        return pathBox;
+    }
+
+    public void updateBox() {
+        hitBox.setLocation((int) location.getX()-hitbox/2, (int) location.getY()-hitbox/2);
+        pathBox.setLocation((int) location.getX()-pathbox/2, (int) location.getY()-pathbox/2);
     }
 
     public int getLives() {
@@ -119,9 +104,5 @@ public class Balloon {
 
     public int getRadius() {
         return radius;
-    }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
     }
 }

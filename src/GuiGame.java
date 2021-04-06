@@ -34,7 +34,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         player = p;
         Height = h;
         Width = w;
-        music = new Music("");
         createBoard();
         timer = new javax.swing.Timer(10, this);
         super.setLayout(null);
@@ -84,34 +83,22 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                         (int) board[c][i].getDrawBox().getHeight());
             }
         }
-        for (int i = 0; i < pathLocationPoints.length; i++) { //draw board
 
-            g.setColor(Color.BLACK);
-            g.drawRect((int) pathLocationPoints[i].getX(),
-                    (int) pathLocationPoints[i].getHitBox().getY(),
-                    (int) pathLocationPoints[i].getHitBox().getWidth(),
-                    (int) pathLocationPoints[i].getHitBox().getHeight());
-        }
         for(int i = 0; i < balloonList.size(); i++) {
             g.setColor(balloonList.get(i).getColor());
             g.fillOval((int) balloonList.get(i).getLocation().getX() - balloonList.get(i).getRadius() / 2, //have to center the points
                     (int) balloonList.get(i).getLocation().getY() - balloonList.get(i).getRadius() / 2, //have to center the points
                     balloonList.get(i).getRadius(),
                     balloonList.get(i).getRadius());
-            g.setColor(Color.BLACK);
-            g.drawRect((int) balloonList.get(i).getHitBox().getX(),
-                    (int) balloonList.get(i).getHitBox().getY(),
-                    (int) balloonList.get(i).getHitBox().getWidth(),
-                    (int) balloonList.get(i).getHitBox().getHeight());
         }
         for(Monkey m : player.getTowers()) {
             m.draw(g, this);
-            g.drawOval((int) m.getVisionBox().getCenterX(), (int) m.getVisionBox().getCenterY(), m.getVisionRadius(), m.getVisionRadius()); //TODO center vision cone and vision
         }
         for(Dart d : dartList) {
             g.setColor(Color.black);
             g.fillOval((int) d.getPosX(), (int) d.getPosY(), 5, 5);
         }
+        g.setColor(Color.black);
         Font font = new Font("Comic Sans", Font.BOLD, 25); //TODO make it maybe on hotbar or nicer
         g.setFont(font);
         g.drawString("Money: " + player.getMoney(), 20, 80);
@@ -142,7 +129,15 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }else{
                 for (Balloon b : balloonList) {
                     if (b.getHitBox().contains(d.getPosX(), d.getPosY())) {
-                        b.pop();
+
+                        int tempval = b.pop();
+                        repaint();
+                        if(tempval != 0){
+                            balloonList.remove(b);
+                            player.addMoney(10 + 5*tempval);
+                            player.addScore(tempval);
+                        }
+
                         dartList.remove(d);
                         i--;
                         break;
@@ -249,7 +244,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         for (int i = 0; i < balloonList.size(); i++) {
             Balloon b = balloonList.get(i);
             //TODO make gui and map line up
-            if((b.getLocation().getX() - b.getHitBox().getWidth() < 0 || b.getLocation().getX() > Width || b.getLocation().getY() - b.getHitBox().getHeight() < 0 || b.getLocation().getY() > Height) && b.getGoingToLocation() > pathLocationPoints.length - 2) {
+            if((b.getLocation().getX() - b.getPathBox().getWidth() < 0 || b.getLocation().getX() > Width || b.getLocation().getY() - b.getPathBox().getHeight() < 0 || b.getLocation().getY() > Height) && b.getGoingToLocation() > pathLocationPoints.length - 2) {
                 if(player.decreaseLife(b.getLives())) {
                     System.out.println("end");
                     endGame = true;
@@ -257,6 +252,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                 }
                 balloonList.remove(b);
                 i--;
+                continue;
             }
             b = balloonList.get(i);
 
@@ -264,7 +260,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             double directX = b.getLocation().getX() - nextPoint.getX();
             double directY = b.getLocation().getY() - nextPoint.getY();
 
-            if (collides(b.getHitBox(), nextPoint.getHitBox())) { //TODO
+            if (collides(b.getPathBox(), nextPoint.getHitBox())) {
                 b.setLocation(new Location(nextPoint.getX(), nextPoint.getY()));
                 b.updateNextLocation(); //they're at the point they're supposed to go to
                 directX = b.getLocation().getX() - pathLocationPoints[b.getGoingToLocation()].getX();
@@ -285,7 +281,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }
             b.updateLocation();
 
-            b.updateHitBox();
+            b.updateBox();
         }
     }
     public void readBalloons() throws IOException {

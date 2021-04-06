@@ -58,4 +58,12 @@ public class Player {
     public int getScore() {
         return score;
     }
+
+    public void addMoney(int m){
+        money += m;
+    }
+
+    public void addScore(int s){
+        score += s;
+    }
 }
