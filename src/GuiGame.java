@@ -34,7 +34,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         player = p;
         Height = h;
         Width = w;
-        createBoard();
+        createBoard("level1");
         timer = new javax.swing.Timer(10, this);
         super.setLayout(null);
         setFocusable(true);
@@ -42,7 +42,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
     }
 
     public void actionPerformed (ActionEvent e){
-        //TODO monkey shooting! + balloons
         if (active) {
             if (newRound) { //round ended and now add balloons
                 try {
@@ -157,9 +156,9 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         return r;
     }
-    public void createBoard() { //TODO find out why it prints sideways map
+    public void createBoard(String level) {
         int pathLocationCount = 0;
-        Scanner reader = readText("Level1");
+        Scanner reader = readText(level);
         for (int i = 0; i < board.length; i++) {
             for (int c = 0; c < board[0].length; c++) {
                 int balloonTile = -1;
@@ -240,11 +239,12 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
     }
     public void updateBalloon(){
-        //TODO make them not all go out at once and if reaching the end of the map
         for (int i = 0; i < balloonList.size(); i++) {
             Balloon b = balloonList.get(i);
-            //TODO make gui and map line up
-            if((b.getLocation().getX() - b.getPathBox().getWidth() < 0 || b.getLocation().getX() > Width || b.getLocation().getY() - b.getPathBox().getHeight() < 0 || b.getLocation().getY() > Height) && b.getGoingToLocation() > pathLocationPoints.length - 2) {
+            if((b.getLocation().getX() - b.getPathBox().getWidth() < 0
+                    || b.getLocation().getX() > Width
+                    || b.getLocation().getY() - b.getPathBox().getHeight() < 0
+                    || b.getLocation().getY() > Height) && b.getGoingToLocation() > pathLocationPoints.length - 2) {
                 if(player.decreaseLife(b.getLives())) {
                     System.out.println("end");
                     endGame = true;
@@ -280,7 +280,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                 b.moveX(0.5);
             }
             b.updateLocation();
-
             b.updateBox();
         }
     }
@@ -535,7 +534,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         timer.stop(); // stops the timers and music
         hideInstructions(1);
         start = true;
-        createBoard();
+        createBoard("level1");
         music = new Music("");
         newRound = true;
         timer = new javax.swing.Timer(10, this);
