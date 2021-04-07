@@ -1,4 +1,4 @@
-//Written by Kenneth Tong, Edward Stump, and Shreyas Pal
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

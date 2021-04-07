@@ -1,4 +1,4 @@
-//Written By Kenneth Tong
+
 
 import java.awt.*;
 

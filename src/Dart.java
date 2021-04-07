@@ -1,4 +1,4 @@
-//Written by Edward Stump
+
 
 public class Dart {
     private double vX, vY, posX, posY;

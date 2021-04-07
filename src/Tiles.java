@@ -1,4 +1,4 @@
-//Written by Kenneth Tong
+
 import java.awt.*;
 
 public class Tiles {

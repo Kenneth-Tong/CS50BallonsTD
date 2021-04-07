@@ -1,7 +1,5 @@
 /*
 This is the Gui Class for our code, it has all the visual components of our game
-Written by Kenneth Tong, Edward Stump, Shreyas Pal
-
  */
 
 import javax.swing.*;
@@ -128,7 +126,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
     }
 
-    //written by Edward Stump
+
     public void updateDart(){
         for (int i = 0; i < dartList.size(); i++) {
             Dart d = dartList.get(i);
@@ -157,7 +155,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
     }
 
-    //written by Kenneth Tong
+
     public Scanner readText (String l){
         Scanner r = null;
         try {
@@ -167,7 +165,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         return r;
     }
-    //written by Kenneth Tong
+
     public void createBoard(boolean level) {
         int pathLocationCount = 0;
         String nameOfLevel;
@@ -207,7 +205,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         setPathway(pathLocationCount);
     }
 
-    //written by Kenneth Tong
+
     public void setPathway(int amountOfPaths) {
         pathLocationPoints = new Location[amountOfPaths + 2];
         for(int r = 0; r < board.length; r++) {
@@ -223,7 +221,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         setEntranceExit(true);
         setEntranceExit(false);
     }
-    //written by Kenneth Tong
+
     public void setEntranceExit(boolean exit) {
         if(exit) {
             int exitNumber = pathLocationPoints.length - 1;
@@ -260,7 +258,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }
         }
     }
-    //written by Kenneth Tong
+
     public void updateBalloon(){
         for (int i = 0; i < balloonList.size(); i++) {
             Balloon b = balloonList.get(i);
@@ -305,7 +303,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             b.updateBox();
         }
     }
-    //written by Kenneth Tong
+
     public void readBalloons() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("Balloons.txt"));
         String line = "";
@@ -345,7 +343,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }
         }
     }
-    //written by Kenneth Tong
+
     public int findNumber(String line, int startingValue, char find) {
         for(int j = startingValue; j < line.length(); j++) {
             if (line.charAt(j) == find) {
@@ -354,13 +352,13 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         return -1;
     }
-    //written by Kenneth Tong
+
     public boolean collides(Rectangle r1, Rectangle r2) {
         return r1.intersects(r2);
     }
-    //written by Kenneth Tong
 
-    //written by Shreyas Pal
+
+
     public void placeMonkeys(String type){ // this method places the monkeys
         if (type.equals("dart"))
         {
@@ -438,7 +436,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
     }
 
-    //written by Shreyas Pal
+
     private boolean checkSpot (String type, int x, int y) {
         //this method checks whether a spot is valid to place a certain type of monkey
         Location[] corners = new Location[4];
@@ -484,7 +482,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         return true; //returns true if valid
     }
 
-    //written by Shreyas Pal
+
     public void showInstructions(int type, String monkey) {
         //this method essentially sets boolean values true which then shows certain instructions/messages on the screen
         if (type == 0) { //error message when the player trys buying a monkey with not enough money
@@ -510,7 +508,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         repaint();
     }
 
-    //written by Shreyas Pal
+
     public void hideInstructions(int type) {
         //this method essentially sets boolean values false which then stops certain instructions from being painted on the screen
         if (type == 1){ //type 1 are starting/stopping/pausing messages
@@ -523,22 +521,22 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         repaint();
     }
 
-    //written by Shreyas Pal
+
     public String getPlayerName() {// gets player name
         return player.getName();
     }
 
-    //written by Shreyas Pal
+
     public boolean running() { // checks to see if the game is running
         return active;
     }
 
-    //written by Shreyas Pal
+
     public void setDisplay(Game d) {
         game = d; // updates the display for the game class
     }
 
-    //written by Shreyas Pal
+
     public void startGame(int count) {
         //starts the game by prompting user to enter name and then starting timers and setting up the board
         if (count == 0) {
@@ -551,7 +549,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         hideInstructions(1);
         repaint();
     }
-    //written by Shreyas Pal
+
     public void pauseGame() { //pauses the game by pausing all timers and pausing the music
         pause = true;
         active = false;
@@ -560,7 +558,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         repaint();
     }
 
-    //written by Shreyas Pal
+
     public void reset(boolean died ) {
         // resets the game by clearing all the balloons, stopping the timers and recreating board
         player.reset();

@@ -1,5 +1,5 @@
 //This is the main class, it sets up the JPanels and runs them
-//Written by Kenneth Tong and Shreyas Pal
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;

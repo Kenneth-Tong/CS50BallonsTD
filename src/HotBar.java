@@ -1,5 +1,5 @@
 //This is the HotBar class and it creates all the buttons below the board
-//Written by Shreyas Pal
+
 
 import java.awt.*;
 import java.awt.event.ActionListener;

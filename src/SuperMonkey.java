@@ -1,4 +1,4 @@
-//Written By Edward Stump and Kenneth Tong
+
 import java.util.ArrayList;
 
 public class SuperMonkey extends Monkey {
