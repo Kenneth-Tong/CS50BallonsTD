@@ -1,11 +1,7 @@
-//import javafx.scene.shape.Circle;
-import javafx.scene.shape.Circle;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.Graphics;
@@ -16,7 +12,6 @@ public abstract class Monkey {
     private ArrayList<Balloon> balloonsInSight = new ArrayList<>();//TODO last and first balloon attack
     private BufferedImage image;
     private boolean imageFill = true;
-    private Circle visionBox;
     private Rectangle box;
     private Location location;
     private String name;
@@ -28,13 +23,8 @@ public abstract class Monkey {
         location = new Location(x,y);
         box = new Rectangle(32, 32);
         box.setLocation((int) location.getX(), (int) location.getY());
-        visionBox = new Circle();
         setImageFill(true);
         velocity = v;
-    }
-
-    public ArrayList<Balloon> getBalloonsInSight() {
-        return balloonsInSight;
     }
 
     public void draw(Graphics g, ImageObserver observer){  // draws the rectangle
@@ -77,30 +67,13 @@ public abstract class Monkey {
     public int getValue() {
         return value;
     }
-    public String getName() {
-        return name;
-    }
     public void setName(String s) {
         name = s;
     }
     public void setValue(int x) {
         value = x;
     }
-    public void setVisionRadius(int i) {
-        visionRadius = i;
-        visionBox.setRadius(i);
-        visionBox.setCenterX(box.getX() - i/2);
-        visionBox.setCenterY(box.getY() - i/2);
-    }
-    public int getVisionRadius() {
-        return visionRadius;
-    }
-    public Circle getVisionBox() {
-        return visionBox;
-    }
-    public Rectangle getBox() {
-        return box;
-    }
+
     public double getVelocity() {
         return velocity;
     }

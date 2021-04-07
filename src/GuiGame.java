@@ -8,7 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class GuiGame extends JPanel implements ActionListener, Arcade {
-    private int Height, Width, TILESIZEW = 10, TILESIZEH = 10;
+    private int Height, Width, TILESIZEW = 10, TILESIZEH = 10, level;
     private Tiles[][] board = new Tiles[TILESIZEW][TILESIZEH];
     private final Player player;
 
@@ -34,7 +34,19 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         player = p;
         Height = h;
         Width = w;
-        createBoard("level1");
+        String[] options = {"Level 1", "Level 2"};
+        level = JOptionPane.showOptionDialog(null,
+                "Pick a level:",
+                "Level Choice",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                null);
+        if (level == 0)
+            createBoard(true);
+        else
+            createBoard(false);
         timer = new javax.swing.Timer(10, this);
         super.setLayout(null);
         setFocusable(true);
@@ -113,7 +125,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         font = new Font("Comic Sans", Font.BOLD, 15); //TODO make it maybe on hotbar or nicer
         g.setFont(font);
         if (info){
-            g.drawString("Click anywhere on the screen to place the monkey.", 10, Height - 100);
+            g.drawString("Click anywhere on the screen to place the monkey.", 10, Height - 200);
         }
     }
 
@@ -128,7 +140,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }else{
                 for (Balloon b : balloonList) {
                     if (b.getHitBox().contains(d.getPosX(), d.getPosY())) {
-
                         int tempval = b.pop();
                         repaint();
                         if(tempval != 0){
@@ -136,7 +147,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                             player.addMoney(10 + 5*tempval);
                             player.addScore(tempval);
                         }
-
                         dartList.remove(d);
                         i--;
                         break;
@@ -156,9 +166,15 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         return r;
     }
-    public void createBoard(String level) {
+    public void createBoard(boolean level) {
         int pathLocationCount = 0;
-        Scanner reader = readText(level);
+        String nameOfLevel;
+        if (level) {
+            nameOfLevel = "level1";
+        } else {
+            nameOfLevel = "level2";
+        }
+        Scanner reader = readText(nameOfLevel);
         for (int i = 0; i < board.length; i++) {
             for (int c = 0; c < board[0].length; c++) {
                 int balloonTile = -1;
@@ -285,6 +301,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
     }
     public void readBalloons() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("Balloons.txt"));
+
         String line = "";
         for(int i = 0; i < round; i++) {
             line = reader.readLine();
@@ -514,7 +531,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     null, null, "name"));
         }
         timer.start(); // stars the game
-        music.start();
         active = true;
         hideInstructions(1);
         repaint();
@@ -523,7 +539,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         pause = true;
         active = false; // pauses the game
         timer.stop();  // stops the timers and music
-        music.stop();
         repaint();
     }
     public void reset() { // stops the game
@@ -534,7 +549,10 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         timer.stop(); // stops the timers and music
         hideInstructions(1);
         start = true;
-        createBoard("level1");
+        if (level == 0)
+            createBoard(true);
+        else
+            createBoard(false);
         music = new Music("");
         newRound = true;
         timer = new javax.swing.Timer(10, this);

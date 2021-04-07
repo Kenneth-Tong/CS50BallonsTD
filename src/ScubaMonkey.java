@@ -11,7 +11,6 @@ public class ScubaMonkey extends Monkey {
         super.setName("ScubaMonkey");
         super.setImage(0);
         super.setValue(250);
-        super.setVisionRadius(200);
     }
 
     @Override
