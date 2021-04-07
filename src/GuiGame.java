@@ -8,7 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class GuiGame extends JPanel implements ActionListener, Arcade {
-    private int Height, Width, TILESIZEW = 10, TILESIZEH = 10, level;
+    private int Height, Width, TILESIZEW = 10, TILESIZEH = 10, levelNumber;
     private Tiles[][] board = new Tiles[TILESIZEW][TILESIZEH];
     private final Player player;
 
@@ -16,7 +16,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
 
     private javax.swing.Timer timer;
 
-    private ArrayList<Balloon> balloonList = new ArrayList<>(); //TODO layer balloons via double arraylist within an arraylist
+    private ArrayList<Balloon> balloonList = new ArrayList<>();
     private ArrayList<Dart> dartList = new ArrayList<>();
 
     private Game game;
@@ -34,19 +34,8 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         player = p;
         Height = h;
         Width = w;
-        String[] options = {"Level 1", "Level 2"};
-        level = JOptionPane.showOptionDialog(null,
-                "Pick a level:",
-                "Level Choice",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                options,
-                null);
-        if (level == 0)
-            createBoard(true);
-        else
-            createBoard(false);
+        createBoard(true);
+        levelNumber = 1;
         timer = new javax.swing.Timer(10, this);
         super.setLayout(null);
         setFocusable(true);
@@ -548,12 +537,9 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         start = true;
         round = 1;
         if (!died) {
-            if (level == 0)
-                createBoard(false);
-            else
-                createBoard(true);
+            createBoard(false);
         } else {
-            if (level == 0)
+            if(levelNumber == 1)
                 createBoard(true);
             else
                 createBoard(false);
