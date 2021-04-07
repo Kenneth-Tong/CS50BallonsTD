@@ -1,4 +1,5 @@
-// Represents current Game Stats
+// This class contains all the functions needed for the score and highscore that is displayed above the game in the JPanel
+//Written by Shreyas Pal
 
 import java.awt.*;
 import java.io.File;

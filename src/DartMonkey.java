@@ -11,7 +11,6 @@ public class DartMonkey extends Monkey {
         super.setName("DartMonkey");
         super.setImage(0);
         super.setValue(250);
-        super.setVisionRadius(200);
     }
 
     @Override

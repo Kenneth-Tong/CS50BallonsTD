@@ -1,3 +1,9 @@
+/*
+This is the Gui Class for our code, it has all the visual components of our game
+Written by Kenneth Tong, Edward Stump, Shreyas Pal
+
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,20 +22,20 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
 
     private javax.swing.Timer timer;
 
-    private ArrayList<Balloon> balloonList = new ArrayList<>(); //TODO layer balloons via double arraylist within an arraylist
+    private ArrayList<Balloon> balloonList = new ArrayList<>();
     private ArrayList<Dart> dartList = new ArrayList<>();
 
     private Game game;
 
     private Location[] pathLocationPoints;
     private int round = 1;
-    private boolean newRound = true, endGame = false, pathUp = false, pathDown = false, pathRight = false, pathLeft = false;
+    private boolean newRound = true, pathUp = false, pathDown = false, pathRight = false, pathLeft = false;
 
     private boolean active = false;
-    private boolean dartM = false, ninjaM = false, superM = false, scubaM = false;
+    private boolean dartM = false, superM = false, scubaM = false;
     private boolean start = true, pause, info;
 
-    public GuiGame(Player p, int w, int h) //TODO resizeable and doesn't overlap with hotbar
+    public GuiGame(Player p, int w, int h) //constructor that sets up the player, window size and creates the board
     {
         player = p;
         Height = h;
@@ -41,16 +47,16 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         setFocusTraversalKeysEnabled(false);
     }
 
-    public void actionPerformed (ActionEvent e){
+    public void actionPerformed (ActionEvent e){ //actions for the timers
         if (active) {
-            if (newRound) { //round ended and now add balloons
+            if (newRound) { //if new round sets up the balloons
                 try {
                     readBalloons();
                 } catch (IOException ioException) {
                     System.out.println("Error with reading balloon.txt");
                 }
                 newRound = false; //TODO make button t
-            } else {
+            } else { //updates all the darts and monkeys and balloons while the round is running
                 updateBalloon();
                 if (balloonList.size() == 0) {
                     newRound = true;
@@ -65,15 +71,15 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                 updateDart();
             }
             repaint();
-        } else {
+        } else { //defeat message
             JOptionPane.showMessageDialog(null, "DEFEAT\nRounds Survived: " + round, "Game Over", JOptionPane.PLAIN_MESSAGE);
             game.gameOver(player.getScore());
         }
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) { //painting class, paints everything on the board
         super.paintComponent(g);
-        for (int i = 0; i < board.length; i++) { //draw board
+        for (int i = 0; i < board.length; i++) { //draw board //gets all the tiles on the board and paints them
             for (int c = 0; c < board[0].length; c++) {
                 g.setColor(board[c][i].getColor());
                 g.fillRect((int) board[c][i].getDrawBox().getX(),
@@ -83,41 +89,41 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }
         }
 
-        for(int i = 0; i < balloonList.size(); i++) {
+        for(int i = 0; i < balloonList.size(); i++) { //gets all the balloons and paints them
             g.setColor(balloonList.get(i).getColor());
             g.fillOval((int) balloonList.get(i).getLocation().getX() - balloonList.get(i).getRadius() / 2, //have to center the points
                     (int) balloonList.get(i).getLocation().getY() - balloonList.get(i).getRadius() / 2, //have to center the points
                     balloonList.get(i).getRadius(),
                     balloonList.get(i).getRadius());
         }
-        for(Monkey m : player.getTowers()) {
+        for(Monkey m : player.getTowers()) { //gets all the monkeys and paints them
             m.draw(g, this);
         }
-        for(Dart d : dartList) {
+        for(Dart d : dartList) { //gets all the darts and paints them
             g.setColor(Color.black);
             g.fillOval((int) d.getPosX(), (int) d.getPosY(), 5, 5);
         }
-        g.setColor(Color.black);
+        g.setColor(Color.black); //paints the players lives and money
         Font font = new Font("Comic Sans", Font.BOLD, 25); //TODO make it maybe on hotbar or nicer
         g.setFont(font);
         g.drawString("Money: " + player.getMoney(), 20, 80);
         g.drawString("Lives: " + player.getLives(), Width - 150, 80);
         game.update(player.getScore());
 
-        if (start){
+        if (start){ //starting message
             g.drawString("Click Start to begin playing!", 80, Height - 200);
-        } else if (pause) {
+        } else if (pause) {//pausing message
             g.drawString("Game Paused", 150, Height - 200);
         }
 
         font = new Font("Comic Sans", Font.BOLD, 15); //TODO make it maybe on hotbar or nicer
         g.setFont(font);
-        if (info){
+        if (info){ //monkey placement instructions
             g.drawString("Click anywhere on the screen to place the monkey.", 10, Height - 100);
         }
     }
 
-    //Eddie stuff
+    //written by Edward Stump
     public void updateDart(){
         for (int i = 0; i < dartList.size(); i++) {
             Dart d = dartList.get(i);
@@ -146,7 +152,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
     }
 
-    //Kenny Stuff
+    //written by Kenneth Tong
     public Scanner readText (String l){
         Scanner r = null;
         try {
@@ -156,6 +162,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         return r;
     }
+    //written by Kenneth Tong
     public void createBoard(String level) {
         int pathLocationCount = 0;
         Scanner reader = readText(level);
@@ -188,6 +195,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         reader.close();
         setPathway(pathLocationCount);
     }
+    //written by Kenneth Tong
     public void setPathway(int amountOfPaths) {
         pathLocationPoints = new Location[amountOfPaths + 2];
         for(int r = 0; r < board.length; r++) {
@@ -202,6 +210,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         setEntranceExit(true);
         setEntranceExit(false);
     }
+    //written by Kenneth Tong
     public void setEntranceExit(boolean exit) {
         if(exit) {
             int exitNumber = pathLocationPoints.length - 1;
@@ -238,6 +247,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }
         }
     }
+    //written by Kenneth Tong
     public void updateBalloon(){
         for (int i = 0; i < balloonList.size(); i++) {
             Balloon b = balloonList.get(i);
@@ -247,7 +257,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     || b.getLocation().getY() > Height) && b.getGoingToLocation() > pathLocationPoints.length - 2) {
                 if(player.decreaseLife(b.getLives())) {
                     System.out.println("end");
-                    endGame = true;
                     break;
                 }
                 balloonList.remove(b);
@@ -283,6 +292,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             b.updateBox();
         }
     }
+    //written by Kenneth Tong
     public void readBalloons() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("Balloons.txt"));
         String line = "";
@@ -318,6 +328,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             }
         }
     }
+    //written by Kenneth Tong
     public int findNumber(String line, int startingValue, char find) {
         for(int j = startingValue; j < line.length(); j++) {
             if (line.charAt(j) == find) {
@@ -326,38 +337,40 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         return -1;
     }
+    //written by Kenneth Tong
     public boolean collides(Rectangle r1, Rectangle r2) {
         return r1.intersects(r2);
     }
+    //written by Kenneth Tong
 
-    //Shreyas Stuff
-    public void placeMonkeys(String type){
+    //written by Shreyas Pal
+    public void placeMonkeys(String type){ // this method places the monkeys
         if (type.equals("dart"))
         {
             dartM = true;
             showInstructions(4,"DartMonkey");
             addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mouseClicked(MouseEvent e) { // get mouse listener to listen for clicks
                     if (dartM) {
-                        int x = e.getX(), y = e.getY();
-                        if (checkSpot("normal", x, y)) {
-                            DartMonkey m = new DartMonkey(x, y);
+                        int x = e.getX(), y = e.getY(); //gets the x,y coordinates for the clicks
+                        if (checkSpot("normal", x, y)) { //check if spot is valid
+                            DartMonkey m = new DartMonkey(x, y); //if valid it creates a monkey and adds it to the monkey list
                             if (player.buy(m)) {
                                 hideInstructions(2);
                                 repaint();
                             } else {
-                                showInstructions(0, "DartMonkey");
+                                showInstructions(0, "DartMonkey"); // if not it tells them they can't afford the monkey
                             }
                         } else {
-                            showInstructions(5, "DartMonkey");
+                            showInstructions(5, "DartMonkey"); //tells them the spot is valid
                         }
                         dartM = false;
                     }
                 }
             });
         }
-        else if (type.equals("super"))
+        else if (type.equals("super")) //does the same thing as above but for super monkey
         {
             superM = true;
             showInstructions(4,"SuperMonkey");
@@ -382,7 +395,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                 }
             });
         }
-        else if (type.equals("scuba")) {
+        else if (type.equals("scuba")) { //does the same thing as above but for scuba monkey
             scubaM = true;
             showInstructions(4,"ScubaMonkey");
             addMouseListener(new MouseAdapter() {
@@ -407,34 +420,37 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             });
         }
     }
-    private boolean checkSpot (String type, int x, int y) {
-        for (Tiles[] row : board) {
+
+    //written by Shreyas Pal
+    private boolean checkSpot (String type, int x, int y) { //this method checks whether a spot is valid to place a certain type of monkey
+        Location[] corners = new Location[4]; //this creates the 4 coordinates of the monkey hitbox by using the coordinates provided as its center
+        corners[0] = new Location(x - (16), y - (16));
+        corners[1] = new Location(x - (16), y + (16));
+        corners[2] = new Location(x + (16), y - (16));
+        corners[3] = new Location(x + (16), y + (16));
+        for (Tiles[] row : board) { //then the method goes through all the tiles on the board
             for (Tiles column : row) {
-                Rectangle temp = column.getHitBox();
-                if(column.getName() == null){
-                    Location[] corners = getFourCorners(x, y);
-                    for (Location corner : corners) {
+                Rectangle temp = column.getHitBox(); //it gets the hitbox of the tile
+                if(column.getName() == null){ //if the current tile is an alignment tile and it contains any 4 corners, it returns false
+                     for (Location corner : corners) {
                         if (temp.contains(corner.getX(), corner.getY()))
                             return false;
                     }
                 }
-                else {
-                    if (column.getName().equals("path")) {
-                        Location[] corners = getFourCorners(x, y);
+                else {//if they are normal tiles
+                    if (column.getName().equals("path")) {  //it check if any path tiles contain the monkeys
                         for (Location corner : corners) {
                             if (temp.contains(corner.getX(), corner.getY()))
                                 return false;
                         }
                     }
-                    if (column.getName().equals("grass") && type.equals("water")) {
-                        Location[] corners = getFourCorners(x, y);
+                    if (column.getName().equals("grass") && type.equals("water")) { //checks if the any grass tiles contain water monkeys
                         for (Location corner : corners) {
                             if (temp.contains(corner.getX(), corner.getY()))
                                 return false;
                         }
                     }
-                    if (column.getName().equals("water") && type.equals("normal")) {
-                        Location[] corners = getFourCorners(x, y);
+                    if (column.getName().equals("water") && type.equals("normal")) { //checks if any water tiles contain normal monkeys
                         for (Location corner : corners) {
                             if (temp.contains(corner.getX(), corner.getY()))
                                 return false;
@@ -443,30 +459,24 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                 }
             }
         }
-        return true;
+        return true; //returns true if valid
     }
-    private Location[] getFourCorners(int x, int y) {
-        Location[] corners = new Location[4];
-        corners[0] = new Location(x - (16), y - (16));
-        corners[1] = new Location(x - (16), y + (16));
-        corners[2] = new Location(x + (16), y - (16));
-        corners[3] = new Location(x + (16), y + (16));
-        return corners;
-    }
-    public void showInstructions(int type, String monkey) {
-        if (type == 0) {
+
+    //written by Shreyas Pal
+    public void showInstructions(int type, String monkey) { //this method essentially sets boolean values true which then shows certain instructions/messages on the screen
+        if (type == 0) { //error message when the player trys buying a monkey with not enough money
             JOptionPane.showMessageDialog(null,
                     "You need more money for this monkey!",
                     "Invalid Purchase",
                     JOptionPane.PLAIN_MESSAGE);
         }
-        if (type == 1) {
+        if (type == 1) { //type 1 is starting
             start = true;
-        }else if (type == 2){
+        }else if (type == 2){ // type 2 is pausing
             pause = true;
-        }else if (type == 4){
+        }else if (type == 4){ //type 4 is resetting
             info = true;
-        }else if (type == 5){
+        }else if (type == 5){ //type 5 is when a monkey is placed in an incorrect spot
             pauseGame();
             JOptionPane.showMessageDialog(null,
                     monkey + " can't be placed there!" +
@@ -476,17 +486,19 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         }
         repaint();
     }
-    public void hideInstructions(int type) {
-        if (type == 1){
+
+    //written by Shreyas Pal
+    public void hideInstructions(int type) {//this method essentially sets boolean values false which then stops certain instructions from being painted on the screen
+        if (type == 1){ //type 1 are starting/stopping/pausing messages
             start = false;
             pause = false;
             info = false;
         }
-        else if  (type == 2)
+        else if  (type == 2) // type 2 is instructions for placing monkey
             info = false;
         repaint();
     }
-    public String getHighScore() {
+    public String getHighScore() { //returns the highscore by accessing a text file
         try {
             File highScores = new File("highscores.txt");
             Scanner reader = new Scanner(highScores);
@@ -494,44 +506,55 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             while (reader.hasNextLine())
                 a += reader.nextLine();
             return a;
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) { //if not found returns 0
             return "0";
         }
     }
-    public String getPlayerName() {
+
+    //written by Shreyas Pal
+    public String getPlayerName() {// gets player name
         return player.getName();
     }
+
+    //written by Shreyas Pal
     public boolean running() { // checks to see if the game is running
         return active;
     }
+
+    //written by Shreyas Pal
     public void setDisplay(Game d) {
-        game = d; // updates the points the first time
+        game = d; // updates the display for the game class
     }
-    public void startGame(int count) {
+
+    //written by Shreyas Pal
+    public void startGame(int count) { //starts the game by prompting user to enter name and then starting timers and music and settting up the board
         if (count == 0) {
             player.setName((String) JOptionPane.showInputDialog(this,
                     "Enter your name:", "Enter Name", JOptionPane.PLAIN_MESSAGE,
                     null, null, "name"));
         }
         timer.start(); // stars the game
-        music.start();
+       // music.start();
         active = true;
         hideInstructions(1);
         repaint();
     }
-    public void pauseGame() {
+    //written by Shreyas Pal
+    public void pauseGame() { //pauses the game by pausing all timers and pausing the music
         pause = true;
-        active = false; // pauses the game
-        timer.stop();  // stops the timers and music
+        active = false;
+        timer.stop();
         music.stop();
         repaint();
     }
-    public void reset() { // stops the game
+
+    //written by Shreyas Pal
+    public void reset() { // resets the game by clearing all the balloons, stopping the timers and music and recreating board
         player.reset();
         balloonList.clear();
         dartList.clear();
         active = false;
-        timer.stop(); // stops the timers and music
+        timer.stop();
         hideInstructions(1);
         start = true;
         createBoard("level1");
