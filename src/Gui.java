@@ -1,3 +1,5 @@
+//This is the main class, it sets up the JPanels and runs them
+//Written by Kenneth Tong and Shreyas Pal
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -13,8 +15,10 @@ public class Gui extends JFrame {
 
         panelMap = new GuiGame(Player,WIDTH, HEIGHT);
 
-        Game display = new Game(panelMap); //passing in a JavaArcade, therefore I know I can call getHighScore(), getScore()
-        HotBar hotbar = new HotBar(panelMap, display); //Also passing in JavaArcade to ControlPanel, I know you will respond to buttons
+        Game display = new Game(panelMap);
+        //passing in a JavaArcade, therefore I know I can call getHighScore(), getScore()
+        HotBar hotbar = new HotBar(panelMap, display);
+        //Also passing in JavaArcade to ControlPanel, I know you will respond to buttons
         panelMap.setDisplay(display);
 
         JPanel panel = new JPanel();

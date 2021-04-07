@@ -1,5 +1,4 @@
-//import javafx.scene.shape.Circle;
-
+//Written by Kenneth Tong, Edward Stump, and Shreyas Pal
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -12,8 +11,7 @@ import java.awt.Graphics;
 import java.awt.image.ImageObserver;
 
 public abstract class Monkey {
-    //do vision and the arraylist of balloons
-    private ArrayList<Balloon> balloonsInSight = new ArrayList<>();//TODO last and first balloon attack
+    private ArrayList<Balloon> balloonsInSight = new ArrayList<>();
     private BufferedImage image;
     private boolean imageFill = true;
 

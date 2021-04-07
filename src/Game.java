@@ -1,4 +1,4 @@
-// This class contains all the functions needed for the score and highscore that is displayed above the game in the JPanel
+// This class contains all the functions needed for the score and the ending message that is displayed above the game in the JPanel
 //Written by Shreyas Pal
 
 import java.awt.*;
@@ -27,6 +27,7 @@ public class Game extends JPanel
         add(new JLabel(" "));
         yourScoreText = new JLabel(" Your Score: " + 0);
         add(yourScoreText);
+
         game = t;
     }
 
@@ -36,9 +37,9 @@ public class Game extends JPanel
     }
 
     public void gameOver(int points) {
-    yourScoreText.setForeground(Color.BLUE);
-    JOptionPane.showMessageDialog(null,
-            "Thank you " + game.getPlayerName() + " for playing",
-            "High Score", JOptionPane.PLAIN_MESSAGE);
+        yourScoreText.setForeground(Color.BLUE);
+        JOptionPane.showMessageDialog(null,
+                "Thank you " + game.getPlayerName() + " for playing",
+                "High Score", JOptionPane.PLAIN_MESSAGE);
     }
 }

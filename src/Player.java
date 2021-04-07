@@ -1,3 +1,4 @@
+//Written by Kenneth Tong
 import java.util.ArrayList;
 
 public class Player {

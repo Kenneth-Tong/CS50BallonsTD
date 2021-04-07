@@ -1,4 +1,4 @@
-//import javafx.scene.shape.Circle;
+//Written By Kenneth Tong
 
 import java.awt.*;
 
@@ -10,9 +10,8 @@ public class Balloon {
     private Rectangle hitBox, pathBox;
     private Location location;
     private int value;
-//    private String resistance;
 
-    public Balloon (int lives, Location location) { //TODO add boolean camo and regen
+    public Balloon (int lives, Location location) {
         this.lives = lives;
         value = lives;
         hitBox = new Rectangle(hitbox, hitbox);

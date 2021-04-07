@@ -1,3 +1,4 @@
+//Written By Edward Stump and Kenneth Tong
 import java.util.ArrayList;
 
 public class SuperMonkey extends Monkey {
@@ -27,9 +28,10 @@ public class SuperMonkey extends Monkey {
         if (timer == 0 && targ != null) {
             timer = COOLDOWN;
             return new Dart(this.getVelocity() *
-                    Math.cos(Math.atan((this.getLocation().getY() - targ.getY()) / (this.getLocation().getX() - targ.getX()))),
-                    this.getVelocity() *
-                            Math.sin(Math.atan((this.getLocation().getY() - targ.getY()) / (this.getLocation().getX() - targ.getX()))),
+                    Math.cos(Math.atan((this.getLocation().getY() - targ.getY()) /
+                            (this.getLocation().getX() - targ.getX()))), this.getVelocity() *
+                            Math.sin(Math.atan((this.getLocation().getY() - targ.getY()) /
+                                    (this.getLocation().getX() - targ.getX()))),
                     this.getLocation().getX(), this.getLocation().getY());
 
         }

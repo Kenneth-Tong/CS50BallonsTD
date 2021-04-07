@@ -1,3 +1,4 @@
+//Written By Edward Stump and Kenneth Tong
 import java.util.ArrayList;
 
 public class DartMonkey extends Monkey {
@@ -27,7 +28,8 @@ public class DartMonkey extends Monkey {
         if (timer == 0 && targ != null) {
             timer = COOLDOWN;
 
-            double angle = Math.atan((this.getLocation().getY() - targ.getY()) / (this.getLocation().getX() - targ.getX()));
+            double angle = Math.atan((this.getLocation().getY() - targ.getY()) /
+                    (this.getLocation().getX() - targ.getX()));
 
             if(targ.getX() < this.getLocation().getX()) angle += Math.PI;
 
