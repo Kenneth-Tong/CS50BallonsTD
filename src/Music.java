@@ -1,3 +1,5 @@
+//This is the Music class and it plays an audio track on loop
+//Written by Shreyas Pal
 import javax.swing.*;
 import javax.sound.sampled.*;
 import java.io.File;

@@ -49,10 +49,8 @@ public class Balloon {
     public int pop() {
         lives--;
         updateColor(lives);
-        if(lives <= 0)
-            return value;
-        else
-            return 0;
+        if(lives <= 0) return value;
+        else return 0;
     }
 
     public Location getLocation() {

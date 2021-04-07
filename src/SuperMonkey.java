@@ -8,7 +8,7 @@ public class SuperMonkey extends Monkey {
     public SuperMonkey (int x, int y)
     {
         super(x, y, 3.5);
-        super.setName("DartMonkey");
+        super.setName("SuperMonkey");
         super.setImage(0);
         super.setValue(250);
     }

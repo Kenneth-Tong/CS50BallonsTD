@@ -1,3 +1,6 @@
+//This is an Interface Class for setting up the games and the Hotbar together
+//Written by Shreyas Pal
+
 import java.util.ArrayList;
 
 public interface Arcade {

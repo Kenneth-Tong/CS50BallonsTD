@@ -1,3 +1,6 @@
+//This is the HotBar class and it creates all the buttons below the board
+//Written by Shreyas Pal
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,6 +21,7 @@ public class HotBar extends JPanel implements ActionListener{
 
         super.setLayout(new GridLayout(3, 4));
 
+        //adds all the buttons and makes them visible
         dartMonkey = new JButton("Dart Monkey - $250");
         dartMonkey.addActionListener(this);
         add(dartMonkey);
@@ -48,7 +52,7 @@ public class HotBar extends JPanel implements ActionListener{
 
     }
 
-    public void actionPerformed(ActionEvent e)
+    public void actionPerformed(ActionEvent e) //if a button is pressed
     {
         JButton button = (JButton)e.getSource();
         if (button == startButton)
@@ -56,41 +60,41 @@ public class HotBar extends JPanel implements ActionListener{
             if (!game.running())
             {
                 ((JPanel)(game)).requestFocus(); //need to provide the JPanel focus
-                game.startGame(count);
+                game.startGame(count); //starts the game up again
                 stats.update(0);
-                startButton.setText("Resume");
+                startButton.setText("Resume"); //changes the button to resume
                 stats.repaint();
                 count++;
             }
         }
         else if(button == pauseButton)
         {
-            game.pauseGame();
+            game.pauseGame();  //pauses the game
             startButton.setEnabled(true);
             repaint();
         }
         else if(button == resetButton)
         {
-            game.reset();
+            game.reset(); //resets the game
             stats.repaint();
-            startButton.setText("Start");
+            startButton.setText("Start"); //changes resume back to start
             startButton.setEnabled(true);
             repaint();
         }
         else if(button == dartMonkey)
         {
-            if (game.running())
+            if (game.running()) //places the dart monkey
                 game.placeMonkeys("dart");
         }
 
         else if(button == superMonkey)
         {
-            if (game.running())
+            if (game.running())//places the dart monkey
                 game.placeMonkeys("super");
         }
         else if(button == scubaMonkey)
         {
-            if (game.running())
+            if (game.running())//places the dart monkey
                 game.placeMonkeys("scuba");
         }
 
