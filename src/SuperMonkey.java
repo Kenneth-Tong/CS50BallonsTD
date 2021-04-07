@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class SuperMonkey extends Monkey {
     private int darts = -1;
-    private final int vision = 100, COOLDOWN = 10;
-    private double velocity, timer;
+    private final int vision = 300, COOLDOWN = 10;
+    private double timer;
 
     public SuperMonkey (int x, int y)
     {
@@ -22,7 +22,6 @@ public class SuperMonkey extends Monkey {
             if (Math.sqrt(Math.pow(b.getLocation().getX() - this.getLocation().getX(), 2) +
                     Math.pow(b.getLocation().getY() - this.getLocation().getY(), 2)) <= vision) {
                 targ = b.getLocation();
-                //TODO: rotate monkey
             }
         }
         if (timer == 0 && targ != null) {

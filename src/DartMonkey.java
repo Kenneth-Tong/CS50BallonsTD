@@ -22,7 +22,6 @@ public class DartMonkey extends Monkey {
             if (Math.sqrt(Math.pow(b.getLocation().getX() - this.getLocation().getX(), 2) +
                     Math.pow(b.getLocation().getY() - this.getLocation().getY(), 2)) <= vision) {
                 targ = b.getLocation();
-                //TODO: rotate monkey
             }
         }
         if (timer == 0 && targ != null) {

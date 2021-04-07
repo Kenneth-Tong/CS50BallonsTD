@@ -10,7 +10,6 @@ public interface Arcade {
     public void pauseGame();
     public void reset(boolean died);
     public String getPlayerName();
-    public String getHighScore();
     public void placeMonkeys(String type);
     public void setDisplay(Game d);
 

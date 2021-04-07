@@ -27,8 +27,6 @@ public class Game extends JPanel
         add(new JLabel(" "));
         yourScoreText = new JLabel(" Your Score: " + 0);
         add(yourScoreText);
-        add(new JLabel(" Current High Score: " + t.getHighScore()));
-
         game = t;
     }
 
@@ -38,20 +36,9 @@ public class Game extends JPanel
     }
 
     public void gameOver(int points) {
-        if(points > Integer.parseInt(game.getHighScore())){
-            if (points > Integer.parseInt(game.getHighScore())) {
-                yourScoreText.setForeground(Color.BLUE);
-                JOptionPane.showMessageDialog(null,
-                        "Congratulations " + game.getPlayerName() + "!\nYou are the new high scorer!",
-                        "High Score", JOptionPane.PLAIN_MESSAGE);
-                try {
-                    PrintWriter writer = new PrintWriter(new File("highScores.txt"));
-                    writer.println(points);
-                    writer.close();
-                } catch (Exception e) {
-                    System.out.println("Done");
-                }
-            }
-        }
+    yourScoreText.setForeground(Color.BLUE);
+    JOptionPane.showMessageDialog(null,
+            "Thank you " + game.getPlayerName() + " for playing",
+            "High Score", JOptionPane.PLAIN_MESSAGE);
     }
 }

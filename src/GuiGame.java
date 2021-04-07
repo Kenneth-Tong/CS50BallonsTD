@@ -29,7 +29,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
     private boolean dartM = false, ninjaM = false, superM = false, scubaM = false;
     private boolean start = true, pause, info;
 
-    public GuiGame(Player p, int w, int h) //TODO resizeable and doesn't overlap with hotbar
+    public GuiGame(Player p, int w, int h)
     {
         player = p;
         Height = h;
@@ -68,6 +68,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
                     newRound = true;
                     round++;
                     if (round == 10) {
+                        JOptionPane.showMessageDialog(null, "You finished the level! Onto the next!", "Game Complete", JOptionPane.PLAIN_MESSAGE);
                         reset(false);
                     }
                 }
@@ -113,7 +114,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             g.fillOval((int) d.getPosX(), (int) d.getPosY(), 5, 5);
         }
         g.setColor(Color.black);
-        Font font = new Font("Comic Sans", Font.BOLD, 25); //TODO make it maybe on hotbar or nicer
+        Font font = new Font("Comic Sans", Font.BOLD, 25);
         g.setFont(font);
         g.drawString("Money: " + player.getMoney(), 20, 80);
         g.drawString("Lives: " + player.getLives(), Width - 150, 80);
@@ -122,10 +123,10 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
         if (start){
             g.drawString("Click Start to begin playing!", 80, Height - 200);
         } else if (pause) {
-            g.drawString("Game Paused", 150, Height - 200);
+            g.drawString("Game Paused", 150, Height - 150);
         }
 
-        font = new Font("Comic Sans", Font.BOLD, 15); //TODO make it maybe on hotbar or nicer
+        font = new Font("Comic Sans", Font.BOLD, 15);
         g.setFont(font);
         if (info){
             g.drawString("Click anywhere on the screen to place the monkey.", 10, Height - 200);
@@ -506,18 +507,7 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             info = false;
         repaint();
     }
-    public String getHighScore() {
-        try {
-            File highScores = new File("highscores.txt");
-            Scanner reader = new Scanner(highScores);
-            String a = "";
-            while (reader.hasNextLine())
-                a += reader.nextLine();
-            return a;
-        } catch (FileNotFoundException e) {
-            return "0";
-        }
-    }
+
     public String getPlayerName() {
         return player.getName();
     }
@@ -546,12 +536,17 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
     }
     public void reset(boolean died) { // stops the game
         player.reset();
+        pathUp = false;
+        pathDown = false;
+        pathRight = false;
+        pathLeft = false;
         balloonList.clear();
         dartList.clear();
         active = false;
         timer.stop(); // stops the timers and music
         hideInstructions(1);
         start = true;
+        round = 1;
         if (!died) {
             if (level == 0)
                 createBoard(false);
@@ -563,7 +558,6 @@ public class GuiGame extends JPanel implements ActionListener, Arcade {
             else
                 createBoard(false);
         }
-        music = new Music("");
         newRound = true;
         timer = new javax.swing.Timer(10, this);
         super.setLayout(null);

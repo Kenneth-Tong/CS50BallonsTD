@@ -7,7 +7,7 @@ public class Player {
     private ArrayList<Monkey> towers = new ArrayList<>();
 
     public Player() {
-        money = 600;
+        money = 3000;
         score = 0;
         lives = 150;
     }
