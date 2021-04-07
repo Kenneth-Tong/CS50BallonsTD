@@ -75,7 +75,7 @@ public class HotBar extends JPanel implements ActionListener{
         }
         else if(button == resetButton)
         {
-            game.reset(); //resets the game
+            game.reset(true); //resets the game
             stats.repaint();
             startButton.setText("Start"); //changes resume back to start
             startButton.setEnabled(true);

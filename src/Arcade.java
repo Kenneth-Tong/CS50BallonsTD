@@ -8,7 +8,7 @@ public interface Arcade {
     public boolean running();
     public void startGame(int count);
     public void pauseGame();
-    public void reset();
+    public void reset(boolean died);
     public String getPlayerName();
     public String getHighScore();
     public void placeMonkeys(String type);
