@@ -11,7 +11,7 @@ public class SuperMonkey extends Monkey {
         super(x, y, 3.5);
         super.setName("SuperMonkey");
         super.setImage(0);
-        super.setValue(250);
+        super.setValue(2000);
     }
 
     @Override
