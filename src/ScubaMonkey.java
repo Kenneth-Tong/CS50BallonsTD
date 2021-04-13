@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class ScubaMonkey extends Monkey {
     private int darts = -1;
-    private final int vision = 20, COOLDOWN = 50;
+    private final int vision = 200, COOLDOWN = 50;
     private double timer;
 
     public ScubaMonkey (int x, int y)
