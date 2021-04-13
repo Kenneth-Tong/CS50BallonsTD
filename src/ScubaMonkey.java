@@ -27,14 +27,37 @@ public class ScubaMonkey extends Monkey {
         }
         if (timer == 0 && targ != null) {
             timer = COOLDOWN;
-            return new Dart(this.getVelocity() *
-                    Math.cos(Math.atan((this.getLocation().getY() - targ.getY()) /
-                            (this.getLocation().getX() - targ.getX()))),
-                    this.getVelocity() * Math.sin(Math.atan((this.getLocation().getY() - targ.getY()) /
-                            (this.getLocation().getX() - targ.getX()))),
-                    this.getLocation().getX(), this.getLocation().getY());
 
+            double angle = Math.atan((this.getLocation().getY() - targ.getY()) /
+                    (this.getLocation().getX() - targ.getX()));
+
+            if(targ.getX() < this.getLocation().getX()) angle += Math.PI;
+
+            updateDirection(angle);
+
+            return new Dart(this.getVelocity() * Math.cos(angle),this.getVelocity() * Math.sin(angle),
+                    this.getLocation().getX(), this.getLocation().getY());
         }
         return null;
+    }
+
+    public void updateDirection(double angle){
+        if(angle <= Math.PI/8.0 || angle > Math.PI*15.0/8.0) {
+            //East, right
+        }else if(angle <= Math.PI*3.0/8.0){
+            //north east, up right
+        }else if(angle <= Math.PI*5.0/8.0){
+            //north, up
+        }else if(angle <= Math.PI*7.0/8.0){
+            //north west, up left
+        }else if(angle <= Math.PI*9.0/8.0){
+            //west, left
+        }else if(angle <= Math.PI*11.0/8.0){
+            //south west, down left
+        }else if(angle <= Math.PI*13.0/8.0){
+            //south, down
+        }else if(angle <= Math.PI*15.0/8.0){
+            //south east, down right
+        }
     }
 }
